@@ -80,6 +80,7 @@ const NavDrawer = (props: Props) => {
             // We could have also used boxShadow but MUI gives this to us now as of v5
             elevation: 9,
           }}
+          disableEnforceFocus
         >
           <Toolbar />
           <List>
