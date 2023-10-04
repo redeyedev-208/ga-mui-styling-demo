@@ -12,8 +12,8 @@ export const contactData: Array<FormValues> = [
   {
     id: 1,
     name: 'Erlach Bachman',
-    role: 'CTO',
-    skills: ['BS Ologoy', 'Aviato', 'Master Negotiator'],
+    role: 'Dev',
+    skills: ['React', 'JavaScript', 'APIs'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
@@ -22,8 +22,8 @@ export const contactData: Array<FormValues> = [
   {
     id: 2,
     name: 'Richard Hendricks',
-    role: 'CEO',
-    skills: ['CEO', 'Chief Technology Officer', 'Full Stack Engineeer'],
+    role: 'Dev',
+    skills: ['C++', 'React', 'Machine Learning'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
@@ -32,8 +32,8 @@ export const contactData: Array<FormValues> = [
   {
     id: 3,
     name: 'Nelson Bighetti',
-    role: 'Full Stack Engineer',
-    skills: ['Consultant', 'Hooli', 'Collector of Fine Things'],
+    role: 'Dev',
+    skills: ['React', 'Angular', 'Node'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
@@ -42,8 +42,8 @@ export const contactData: Array<FormValues> = [
   {
     id: 4,
     name: 'Bertram Gilfoyle',
-    role: 'Network Engineer',
-    skills: ['Satanist', 'Influencer of People', 'Drinker of Fine Hops'],
+    role: 'Dev',
+    skills: ['Network Engineer', 'Python', 'DevOps'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
@@ -52,8 +52,8 @@ export const contactData: Array<FormValues> = [
   {
     id: 5,
     name: 'Dinesh Chugtai',
-    role: 'Programmer',
-    skills: ['Java', 'Obsessed with One-Upmanship', 'Loves Hardware'],
+    role: 'Dev',
+    skills: ['Java', 'React', 'Angular'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
