@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import {
+  Alert,
+  AlertTitle,
   Autocomplete,
   AutocompleteChangeReason,
   AutocompleteInputChangeReason,
   Button,
+  Dialog,
   FormControl,
   FormControlLabel,
   FormGroup,
@@ -19,31 +22,28 @@ import {
   TextField,
 } from '@mui/material';
 
+import ModifiedTextField from './CustomizedFormComponents/ModifiedTextField';
+
 // Datepicker stuff
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { contactData, FormValues } from '../../Data/ContactData';
+import ModifiedAutoComplete from './CustomizedFormComponents/ModifiedAutoComplete';
+import ModifiedSelect from './CustomizedFormComponents/ModifiedSelect';
+import ModifiedDesktopDatePicker from './CustomizedFormComponents/ModifiedDesktopDatePicker';
+import ModifiedRadios from './CustomizedFormComponents/ModifiedRadios';
 
-const roles = [
-  'CTO',
-  'CEO',
-  'React',
-  'Angular',
-  'Python',
-  'NodeJS',
-  'Machine Learning',
-];
 // This allows for a change to be made in one location versus needing to make multiple changes
-const defaultPreference = 'Work From Home';
-const skills = [
-  'Software Dev',
-  'Architect',
-  'Designer',
-  'Business Analyst',
-  'React',
-];
-const minWidth = 300;
+export const defaultPreference = 'Work From Home';
+// const skills = [
+//   'Software Dev',
+//   'Architect',
+//   'Designer',
+//   'Business Analyst',
+//   'React',
+// ];
+export const minWidth = 300;
 const today = new Date();
 
 type Props = {};
@@ -65,6 +65,11 @@ const ContactForm = (props: Props) => {
     getDefaultFormValues(),
   );
 
+  // Used for the Alert in the  Modal
+  const [alertOpen, setAlertOpen] = useState(false);
+
+  // Note: These handlers can be moved to there own file and imported to clean up the code
+  // This is a common approach for readability and also leaves the Contact form as lean as possible
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -129,149 +134,98 @@ const ContactForm = (props: Props) => {
     });
   };
 
+  const handleButtonSubmit = () => {
+    // With this we are pushing the values from the form
+    // Ideally this  would be saved to a DB but to make the focus on MUI we are handling it like this for now
+    // We want to clear out the form values and then reset it to the default values
+    contactData.push(formValues);
+    setAlertOpen(true);
+    clearValues();
+  };
+
+  const handleClearBtnClick = () => {
+    clearValues();
+  };
+
+  const clearValues = () => {
+    setFormValues({ ...getDefaultFormValues() });
+  };
+
+  const handleAlertClick = () => {
+    setAlertOpen(false);
+  };
+
   return (
-    <Paper>
-      <form>
-        <FormControl>
-          <FormGroup
-            row
-            sx={{
-              padding: 2,
-              justifyContent: 'space-between',
-            }}
-          >
-            <TextField
-              label='Name'
-              id='name'
-              name='name'
-              variant='outlined'
+    <>
+      <Paper>
+        <form>
+          <FormControl>
+            <FormGroup
+              row
               sx={{
-                minWidth: minWidth,
-                marginRight: 2, // This reaches into the default theme and is about 16 pixels
+                padding: 2,
+                justifyContent: 'space-between',
               }}
-              value={formValues.name}
-              // In case you want to know the type that is expected remove the "handleTextFieldChange" handler in the onChange prop
-              // Go up to the handleTextFieldChange handler and the event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-              // Hover over the onChange and intillisense will tell you it expects what is on the handler event pretty cool right
-              onChange={handleTextFieldChange}
-            />
-            <Autocomplete
-              options={roles}
-              sx={{ minWidth: minWidth }}
-              renderInput={(params) => {
-                // This controls the typeable area which is controlled by this and allows customization
-                return (
-                  <TextField
-                    name='role'
-                    {...params}
-                  />
-                );
-              }}
-              // This controls the filter that is taking place behind the scenes and look for an option that is available
-              getOptionLabel={(roleOption) => `${roleOption}`}
-              renderOption={(props, option) => {
-                return <li {...props}>{`${option}`}</li>;
-              }}
-              value={formValues.role || ''}
-              isOptionEqualToValue={(option, value) =>
-                option === value || value === ''
-              }
-              onInputChange={handleAutoCompleteChange}
-            />
-          </FormGroup>
-          <FormGroup
-            row
-            sx={{
-              padding: 2,
-              justifyContent: 'space-between',
-            }}
-          >
-            {/* The value is retrieved from children */}
-            <Select
-              id='skill-select'
-              // This join is meant to separate mulitple skills on a profile if that is the case
-              renderValue={(select: string[]) => select.join(', ')}
-              sx={{
-                minWidth: minWidth,
-                marginRight: 2, // This reaches into the default theme and is about 16 pixels
-              }}
-              value={formValues.skills || ''}
-              onChange={handleSelectChange}
             >
-              {skills.map((skillName) => {
-                return (
-                  <MenuItem
-                    value={skillName}
-                    key={skillName}
-                  >
-                    <ListItemText primary={skillName} />
-                  </MenuItem>
-                );
-              })}
-            </Select>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker
-                label='Date'
-                inputFormat='MM/DD/YYYY'
-                renderInput={(params) => {
-                  return (
-                    <TextField
-                      sx={{ minWidth: minWidth }}
-                      {...params}
-                    />
-                  );
-                }}
+              <ModifiedTextField
+                value={formValues.name}
+                // The values being used in here weren't abstracted because they play an essential part of this contact form
+                // In case you want to know the type that is expected remove the "handleTextFieldChange" handler in the onChange prop
+                // Go up to the handleTextFieldChange handler and the event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+                // Hover over the onChange and intillisense will tell you it expects what is on the handler event pretty cool right
+                onChange={handleTextFieldChange}
+              />
+              <ModifiedAutoComplete
+                value={formValues.role || ''}
+                onInputChange={handleAutoCompleteChange}
+              />
+            </FormGroup>
+            <FormGroup
+              row
+              sx={{
+                padding: 2,
+                justifyContent: 'space-between',
+              }}
+            >
+              {/* The value is retrieved from children */}
+              <ModifiedSelect
+                value={formValues.skills || ''}
+                onChange={handleSelectChange}
+              />
+              <ModifiedDesktopDatePicker
                 value={formValues.startDate}
                 onChange={handleDatepickerChange}
               />
-            </LocalizationProvider>
-          </FormGroup>
-          <FormGroup
-            row
-            sx={{
-              padding: 2,
-              justifyContent: 'space-between',
-            }}
-          >
+            </FormGroup>
             <FormGroup
+              row
               sx={{
-                minWidth: minWidth,
-                marginRight: 2, // This reaches into the default theme and is about 16 pixels
+                padding: 2,
+                justifyContent: 'space-between',
               }}
             >
-              <FormLabel component='legend'>Work Preference</FormLabel>
-              {/* This is kind of the control for the radio buttons */}
-              <RadioGroup
-                id='preference-type-radio'
-                name='preference'
-                value={formValues.preference}
-                onChange={handleRadioChange}
-              >
-                <FormControlLabel
-                  label={defaultPreference}
-                  value={defaultPreference}
-                  control={<Radio />}
-                />
-                <FormControlLabel
-                  label='Hybrid'
-                  value='Hybrid'
-                  control={<Radio />}
-                />
-                <FormControlLabel
-                  label='In Office'
-                  value='In Office'
-                  control={<Radio />}
-                />
-              </RadioGroup>
+              <ModifiedRadios
+                preference={formValues.preference}
+                handleRadioChange={handleRadioChange}
+              />
+              <Stack>
+                <Button onClick={handleButtonSubmit}>Submit</Button>
+                <Button onClick={handleClearBtnClick}>Clear</Button>
+              </Stack>
             </FormGroup>
-            <Stack>
-              <Button>Submit</Button>
-              <Button>Clear</Button>
-            </Stack>
-          </FormGroup>
-        </FormControl>
-      </form>
-    </Paper>
+          </FormControl>
+        </form>
+      </Paper>
+      <Dialog
+        open={alertOpen}
+        onClose={handleAlertClick}
+      >
+        <Alert onClose={handleAlertClick}>
+          <AlertTitle>Success!</AlertTitle>
+          Form has been submitted
+        </Alert>
+      </Dialog>
+    </>
   );
 };
 
