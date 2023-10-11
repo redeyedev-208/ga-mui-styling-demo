@@ -16,7 +16,19 @@ const ModifiedTextField = (props: TextFieldProps) => {
       variant='outlined'
       sx={{
         minWidth: minWidth,
-        marginRight: 2, // This reaches into the default theme and is about 16 pixels
+        marginRight: 2,
+        // zIndex: 'drawer', // Note: this looks at the default themes and will look at the drawer next
+        // '& .MuiInputBase-root': { height: 80 }, Note: Just an example of how to adjust the height
+        '& .MuiOutlinedInput-root.Mui-focused': {
+          '& > fieldset': {
+            borderColor: 'primary.dark',
+          },
+        },
+        '& .MuiOutlinedInput-root:hover': {
+          '& > fieldset.MuiOutlinedInput-notchedOutline': {
+            borderColor: 'orange',
+          },
+        },
       }}
     />
   );

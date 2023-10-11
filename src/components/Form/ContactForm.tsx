@@ -46,6 +46,20 @@ export const defaultPreference = 'Work From Home';
 export const minWidth = 300;
 const today = new Date();
 
+// This is how we target all of the inputs for the Paper component all in one location
+// The syntax we use to accomplish this is called JSS "following eMotion standards"
+const paperInputsStyle = {
+  '& .MuiOutlinedInput-root': {
+    '& > fieldset': { border: '1px solid', borderColor: 'primary.main' },
+    '&:hover': {
+      '& > fieldset': { borderColor: 'primary.light' },
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: 'primary.dark',
+  },
+};
+
 type Props = {};
 
 const ContactForm = (props: Props) => {
@@ -157,7 +171,7 @@ const ContactForm = (props: Props) => {
 
   return (
     <>
-      <Paper>
+      <Paper sx={paperInputsStyle}>
         <form>
           <FormControl>
             <FormGroup
