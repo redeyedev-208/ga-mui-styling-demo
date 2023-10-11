@@ -22,6 +22,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 import ModifiedTextField from './CustomizedFormComponents/ModifiedTextField';
 
@@ -71,6 +72,7 @@ const paperInputsStyle = {
 type Props = {};
 
 const ContactForm = (props: Props) => {
+  const theme = useTheme();
   const getDefaultFormValues = () => {
     return {
       id: contactData.length + 1,
@@ -179,7 +181,23 @@ const ContactForm = (props: Props) => {
 
   return (
     <>
-      <Paper sx={paperInputsStyle}>
+      <Paper sx={paperInputsStyle}></Paper>
+
+      {/* This is how we would pull the values out from the object (object destructuring) and it has it's advantages */}
+      {/* This is also how it is done in MUI v5 syntax so it may change slightly once v6 comes out or if using it already */}
+      {/* https://mui.com/material-ui/customization/default-theme/#main-content */}
+      <Paper
+        sx={{
+          ...paperInputsStyle,
+          margin: { xs: 1, sm: 2 }, // xs screens margin is set to 8px, sm screens margin is set to 16px
+          // This is how you can use the theme to customize the size which for the appBar is set at 1100 + 1 now
+          // However it is also adding the plus 1 now to the actual value of the Navbar which is 1200 and now also plus 1
+          // Be mindful of how this can modify the appliction UI overall
+          zIndex: theme.zIndex.appBar + 1,
+          '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' },
+          '& button.MuiButton-text': { backgroundColor: 'primary.light' },
+        }}
+      >
         <form>
           <FormControl>
             <FormGroup
