@@ -13,7 +13,7 @@ export const contactData: Array<FormValues> = [
     id: 1,
     name: 'Erlach Bachman',
     role: 'Dev',
-    skills: ['React', 'JavaScript', 'APIs'],
+    skills: ['React', 'JavaScript'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
@@ -33,7 +33,7 @@ export const contactData: Array<FormValues> = [
     id: 3,
     name: 'Nelson Bighetti',
     role: 'Dev',
-    skills: ['React', 'Angular', 'Node'],
+    skills: ['Node'],
     startDate: `${
       today.getMonth() + 1
     }/${today.getDate()}/${today.getFullYear()}`,
