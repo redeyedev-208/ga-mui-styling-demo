@@ -6,6 +6,7 @@ import {
   AutocompleteChangeReason,
   AutocompleteInputChangeReason,
   Button,
+  Checkbox,
   Dialog,
   FormControl,
   FormControlLabel,
@@ -45,6 +46,13 @@ export const defaultPreference = 'Work From Home';
 // ];
 export const minWidth = 300;
 const today = new Date();
+const skills = [
+  'Software Dev',
+  'Architect',
+  'Designer',
+  'Business Analyst',
+  'React',
+];
 
 // This is how we target all of the inputs for the Paper component all in one location
 // The syntax we use to accomplish this is called JSS "following eMotion standards"
@@ -205,7 +213,21 @@ const ContactForm = (props: Props) => {
               <ModifiedSelect
                 value={formValues.skills || ''}
                 onChange={handleSelectChange}
-              />
+              >
+                {skills.map((skillName) => {
+                  return (
+                    <MenuItem
+                      value={skillName}
+                      key={skillName}
+                    >
+                      <Checkbox
+                        checked={formValues.skills?.includes(skillName)}
+                      />
+                      <ListItemText primary={skillName} />
+                    </MenuItem>
+                  );
+                })}
+              </ModifiedSelect>
               <ModifiedDesktopDatePicker
                 value={formValues.startDate}
                 onChange={handleDatepickerChange}
