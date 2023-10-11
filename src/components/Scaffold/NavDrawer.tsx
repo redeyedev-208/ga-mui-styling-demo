@@ -41,6 +41,7 @@ const simpleStyles = {
   content: {
     marginLeft: drawerWidth,
     padding: 3,
+    maxWidth: 720,
   },
 };
 
@@ -102,7 +103,7 @@ const NavDrawer = (props: Props) => {
           <Routes>
             <Route
               // Best practices are to always have  a default route
-              path={'/'}
+              path={'/form'}
               element={<ContactFrom />}
             />
             <Route

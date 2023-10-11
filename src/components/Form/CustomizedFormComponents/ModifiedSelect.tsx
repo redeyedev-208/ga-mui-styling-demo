@@ -34,6 +34,7 @@ const ModifiedSelect = (props: {
         minWidth: minWidth,
         marginRight: 2, // This reaches into the default theme and is about 16 pixels
       }}
+      multiple
     >
       {skills.map((skillName) => {
         return (
