@@ -6,13 +6,14 @@ import {
   List,
   ListItem,
 } from '@mui/material';
-import ContactFrom from '../Form/ContactForm';
+import ContactForm from '../Form/ContactForm';
 
 import { BrowserRouter, Link, Routes, Route } from 'react-router-dom';
 import ContactCardGrid from '../Grid/ContactCardGrid';
 import ContactTable from '../Table/ContactTable';
 import ContactDataGrid from '../DataGrid/ContactDataGrid';
-import { useTheme, Theme } from '@mui/material/styles';
+import { useTheme, Theme, ThemeProvider } from '@mui/material/styles';
+import { ModifiedTheme } from '../../Theme/ModifiedTheme';
 
 // These are for the styling and just commenting them for readability
 const drawerWidth = 240;
@@ -100,25 +101,32 @@ const NavDrawer = (props: Props) => {
         {/* Be wary of using inline styles as they can affect accessibility if it looks cool but isn't accessible it is useless */}
         <main style={simpleStyles.content}>
           <Toolbar />
-          <Routes>
-            <Route
-              // Best practices are to always have  a default route
-              path={'/form'}
-              element={<ContactFrom />}
-            />
-            <Route
-              path={'/grid'}
-              element={<ContactCardGrid />}
-            />
-            <Route
-              path={'/table'}
-              element={<ContactTable />}
-            />
-            <Route
-              path={'/datagrid'}
-              element={<ContactDataGrid />}
-            />
-          </Routes>
+          <ThemeProvider theme={ModifiedTheme}>
+            <Routes>
+              <Route
+                // Best practices are to always have  a default route
+                path={'/'}
+                element={<ContactForm />}
+              />
+              <Route
+                // Best practices are to always have  a default route
+                path={'/form'}
+                element={<ContactForm />}
+              />
+              <Route
+                path={'/grid'}
+                element={<ContactCardGrid />}
+              />
+              <Route
+                path={'/table'}
+                element={<ContactTable />}
+              />
+              <Route
+                path={'/datagrid'}
+                element={<ContactDataGrid />}
+              />
+            </Routes>
+          </ThemeProvider>
         </main>
       </div>
     </BrowserRouter>
