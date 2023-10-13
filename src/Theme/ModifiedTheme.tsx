@@ -19,6 +19,18 @@ declare module '@mui/material/Button' {
   }
 }
 
+// To disable we can just switch the value to false for a specific size if needed and remove it from the breakpoints object defintion
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    sl: true;
+    xl: true;
+  }
+}
+
 const ModifiedTheme = createTheme({
   palette: {
     primary: {
@@ -53,6 +65,21 @@ const ModifiedTheme = createTheme({
         },
       ],
     },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 960, // We can always update existing ones
+      lg: 1280,
+      sl: 1500, // This is a custom one so we need to declare it like the others above with TypeScript
+      xl: 1920,
+    },
+  },
+  zIndex: {
+    // This now targets the zIndex and looking in the ContactForm it will be overridden accordingly
+    // Looking in dev tools we can see on the form that the value is no longer 1251 but now 1151 pretty cool
+    appBar: 1150,
   },
 });
 
