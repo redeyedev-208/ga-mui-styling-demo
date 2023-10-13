@@ -35,16 +35,11 @@ import ModifiedAutoComplete from './CustomizedFormComponents/ModifiedAutoComplet
 import ModifiedSelect from './CustomizedFormComponents/ModifiedSelect';
 import ModifiedDesktopDatePicker from './CustomizedFormComponents/ModifiedDesktopDatePicker';
 import ModifiedRadios from './CustomizedFormComponents/ModifiedRadios';
+import { StyledModifiedFormGroup } from './CustomizedFormComponents/StyledModifiedFormGroup';
 
 // This allows for a change to be made in one location versus needing to make multiple changes
 export const defaultPreference = 'Work From Home';
-// const skills = [
-//   'Software Dev',
-//   'Architect',
-//   'Designer',
-//   'Business Analyst',
-//   'React',
-// ];
+
 export const minWidth = 300;
 const today = new Date();
 const skills = [
@@ -195,17 +190,15 @@ const ContactForm = (props: Props) => {
           // Be mindful of how this can modify the appliction UI overall
           zIndex: theme.zIndex.appBar + 1,
           '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' },
-          '& button.MuiButton-text': { backgroundColor: 'primary.light' },
+          '& button.MuiButton-text': { backgroundColor: 'none' },
         }}
       >
         <form>
           <FormControl>
-            <FormGroup
+            <StyledModifiedFormGroup
               row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
+              // sx={{ backgroundColor: 'black' }} - Note uncommenting this proves that the styled component is locking down the styles
+              paddingtop={10}
             >
               <ModifiedTextField
                 value={formValues.name}
@@ -219,14 +212,8 @@ const ContactForm = (props: Props) => {
                 value={formValues.role || ''}
                 onInputChange={handleAutoCompleteChange}
               />
-            </FormGroup>
-            <FormGroup
-              row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
-            >
+            </StyledModifiedFormGroup>
+            <StyledModifiedFormGroup row>
               {/* The value is retrieved from children */}
               <ModifiedSelect
                 value={formValues.skills || ''}
@@ -250,14 +237,8 @@ const ContactForm = (props: Props) => {
                 value={formValues.startDate}
                 onChange={handleDatepickerChange}
               />
-            </FormGroup>
-            <FormGroup
-              row
-              sx={{
-                padding: 2,
-                justifyContent: 'space-between',
-              }}
-            >
+            </StyledModifiedFormGroup>
+            <StyledModifiedFormGroup row>
               <ModifiedRadios
                 preference={formValues.preference}
                 handleRadioChange={handleRadioChange}
@@ -266,7 +247,7 @@ const ContactForm = (props: Props) => {
                 <Button onClick={handleButtonSubmit}>Submit</Button>
                 <Button onClick={handleClearBtnClick}>Clear</Button>
               </Stack>
-            </FormGroup>
+            </StyledModifiedFormGroup>
           </FormControl>
         </form>
       </Paper>
