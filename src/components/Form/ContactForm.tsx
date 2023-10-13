@@ -244,9 +244,22 @@ const ContactForm = (props: Props) => {
                 preference={formValues.preference}
                 handleRadioChange={handleRadioChange}
               />
+              {/* Note: We don't set the size in the theme for the buttons we set them here with sx respectively */}
               <Stack>
-                <Button onClick={handleButtonSubmit}>Submit</Button>
-                <Button onClick={handleClearBtnClick}>Clear</Button>
+                <Button
+                  variant='contained'
+                  sx={{ height: 56, width: 100 }}
+                  onClick={handleButtonSubmit}
+                >
+                  Submit
+                </Button>
+                <Button
+                  variant='modified'
+                  sx={{ height: 56, width: 100 }}
+                  onClick={handleClearBtnClick}
+                >
+                  Clear
+                </Button>
               </Stack>
             </StyledModifiedFormGroup>
           </FormControl>

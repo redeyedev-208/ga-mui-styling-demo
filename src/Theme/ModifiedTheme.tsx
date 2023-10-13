@@ -12,6 +12,13 @@ declare module '@mui/material/styles/createPalette' {
     grid?: { main: string; dark: string };
   }
 }
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    modified: true;
+  }
+}
+
 const ModifiedTheme = createTheme({
   palette: {
     primary: {
@@ -23,6 +30,28 @@ const ModifiedTheme = createTheme({
     grid: {
       main: 'rgba(0,0,0, 0.1)',
       dark: 'rgba(0,0,0, 0.2)',
+    },
+  },
+  // Not all components can receive a variant or style override something to consier (known issue)
+  // Github has a reference with what can and can't be overridden and that can also use a variant
+  // https://mui.com/material-ui/api/button/
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          border: '1px solid black',
+        },
+      },
+      variants: [
+        {
+          props: { variant: 'modified' },
+          style: {
+            fontStyle: 'italic',
+            border: '4px solid lightblue',
+            color: 'darkblue',
+          },
+        },
+      ],
     },
   },
 });
