@@ -191,6 +191,7 @@ const ContactForm = (props: Props) => {
           zIndex: theme.zIndex.appBar + 1,
           '&:hover': { backgroundColor: 'rgba(0,0,0,0.1)' },
           '& button.MuiButton-text': { backgroundColor: 'none' },
+          backgroundColor: 'grid.dark',
         }}
       >
         <form>
