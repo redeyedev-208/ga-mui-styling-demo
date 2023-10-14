@@ -14,6 +14,10 @@ import {
 } from '@mui/material';
 import { contactData } from '../../Data/ContactData';
 
+// Adding a constant here that is close to the tallest height for cards regardless of skills so we are looking at 3 for example
+const contactLineHeight = 24;
+let maxSkills = 1;
+
 type Props = {};
 
 const ContactCardGrid = (props: Props) => {
@@ -42,17 +46,25 @@ const ContactCardGrid = (props: Props) => {
         sx={{ width: 700 }}
       >
         {contactData.map((contact) => {
+          maxSkills =
+            (contact.skills?.length || 0) > maxSkills
+              ? contact.skills?.length || 0
+              : maxSkills;
           return (
             <Grid
               item
               key={contact.name}
             >
-              <Card sx={{ width: 300 }}>
+              <Card sx={{ width: 300, boxShadow: 6 }}>
                 <CardHeader
+                  sx={{
+                    borderBottom: '1px solid',
+                    borderBottomColor: 'primary.main',
+                  }}
                   title={contact.name}
                   subheader={contact.role}
                   avatar={
-                    <Avatar>
+                    <Avatar sx={{ backgroundColor: 'primary.main' }}>
                       {contact.name?.substring(0, 2).toUpperCase() || 'A'}
                     </Avatar>
                   }
@@ -62,7 +74,9 @@ const ContactCardGrid = (props: Props) => {
                   timeout={1000}
                   // orientation='horizontal'
                 >
-                  <CardContent>
+                  <CardContent
+                    sx={{ height: 104 + maxSkills * contactLineHeight }}
+                  >
                     <Typography>
                       <b>Start Date: </b> {contact.startDate}
                     </Typography>
