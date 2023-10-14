@@ -23,6 +23,13 @@ type Props = {};
 const ContactCardGrid = (props: Props) => {
   // We add some state to handle the button that is collapsing all of the stuff "aka cards"
   const [open, setOpen] = useState(true);
+  const gridAlignProps = open
+    ? {}
+    : {
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+      };
   return (
     // m = 8 it is applying a value for the spacing function (take whatever is passed in and mulitply it by 8)
     // Our custom theme is going to pull in the default for us, we can just customize what we need and accept the defaults as needed
@@ -40,10 +47,13 @@ const ContactCardGrid = (props: Props) => {
       >
         Click to open or close
       </Button>
+      {/* Grid is similar to Bootstrap in that a 12 column layout that can be customized */}
+      {/* Note: Also worth to mention that controlling a component at it's own level
+      at times is just a matter of preference */}
       <Grid
         container
         spacing={2}
-        sx={{ width: 700 }}
+        sx={{ width: 700, backgroundColor: 'grid.main' }}
       >
         {contactData.map((contact) => {
           maxSkills =
@@ -54,6 +64,8 @@ const ContactCardGrid = (props: Props) => {
             <Grid
               item
               key={contact.name}
+              xs={open ? 6 : 12}
+              sx={{ ...gridAlignProps, minHeight: 300 }}
             >
               <Card sx={{ width: 300, boxShadow: 6 }}>
                 <CardHeader
