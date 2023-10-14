@@ -11,6 +11,21 @@ const handleExportClick = (cellValues: GridRenderCellParams) => {
   );
   console.log(cellValues);
 };
+
+const datagridSx = {
+  '& .MuiDataGrid-columnHeaders': {
+    backgroundColor: 'primary.main',
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: 'white',
+  },
+  '& .MuiDataGrid-virtualScrollerRenderZone': {
+    '& .MuiDataGrid-row': {
+      '&:nth-of-type(2n)': { backgroundColor: 'grid.main' },
+    },
+  },
+};
+
 const columns = (theme: Theme) => [
   {
     field: 'name', // data
@@ -57,7 +72,7 @@ const columns = (theme: Theme) => [
   {
     field: 'preference',
     headerName: 'Work Preference',
-    minWidth: 150,
+    minWidth: 175,
     renderCell: (cellValues: GridRenderCellParams<string>) => {
       return cellValues.value;
     },
@@ -86,13 +101,14 @@ const ContactDataGrid = (props: Props) => {
   const theme = useTheme();
 
   return (
-    <div style={{ height: 700, width: 820 }}>
+    <div style={{ height: 700, width: 850 }}>
       <DataGrid
         rows={rows()}
         columns={columns(theme)}
         pageSize={5}
         headerHeight={60}
         rowHeight={120}
+        sx={datagridSx}
       />
     </div>
   );
