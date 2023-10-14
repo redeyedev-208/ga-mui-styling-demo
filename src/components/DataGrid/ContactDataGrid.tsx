@@ -1,4 +1,4 @@
-import { DataGrid, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { useTheme, Theme } from '@mui/material/styles';
 import { contactData } from '../../Data/ContactData';
 import { Box, Button } from '@mui/material';
@@ -79,7 +79,7 @@ const columns = (theme: Theme) => [
   },
   {
     // Our static contact data doesn't have a export attribute just a heads up
-    field: 'Export',
+    field: 'Print',
     renderCell: (cellValues: GridRenderCellParams<string>) => {
       return (
         <Button
@@ -89,7 +89,7 @@ const columns = (theme: Theme) => [
             handleExportClick(cellValues);
           }}
         >
-          Export
+          Print
         </Button>
       );
     },
@@ -101,7 +101,7 @@ const ContactDataGrid = (props: Props) => {
   const theme = useTheme();
 
   return (
-    <div style={{ height: 700, width: 850 }}>
+    <div style={{ height: 750, width: 850 }}>
       <DataGrid
         rows={rows()}
         columns={columns(theme)}
@@ -109,6 +109,23 @@ const ContactDataGrid = (props: Props) => {
         headerHeight={60}
         rowHeight={120}
         sx={datagridSx}
+        components={{
+          Toolbar: () => (
+            // Note: We can only add what we would like from the Toolbar
+            // To accomplish this we would change the Toolbar to GridToolbarContainer and add what we want
+            // The great thing about this is that we can do so much by using everything only if it meets our needs accordingly
+            <GridToolbar
+              sx={{
+                justifyContent: 'flex-end',
+                '& button': { border: 'none' },
+                '& .MuiBox-root': { display: 'none' }, // This is needed as a Box fills the right side so we need to remove it
+              }}
+            ></GridToolbar>
+          ),
+        }}
+        initialState={{
+          sorting: { sortModel: [{ field: 'name', sort: 'asc' }] },
+        }}
       />
     </div>
   );
