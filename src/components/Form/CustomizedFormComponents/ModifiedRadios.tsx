@@ -4,6 +4,8 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  FormHelperText,
+  FormControl,
 } from '@mui/material';
 import React from 'react';
 import { minWidth, defaultPreference } from '../ContactForm';
@@ -18,6 +20,9 @@ const ModifiedRadios = (props: {
   ) => void;
 }) => {
   return (
+    // We can use form control and add the disable prop and this will disable everything that is wrapped
+    // Comment out the wrapping form control component to see that the rabio buttons and text for Work Preference are now disabled
+    // <FormControl disabled>
     <FormGroup
       sx={{
         minWidth: minWidth,
@@ -26,12 +31,14 @@ const ModifiedRadios = (props: {
     >
       <FormLabel component='legend'>Work Preference</FormLabel>
       {/* This is kind of the control for the radio buttons */}
+      {/* This also has a row prop and has more than just a row prop */}
       <RadioGroup
         id='preference-type-radio'
         name='preference'
         value={props.preference}
         onChange={props.handleRadioChange}
       >
+        {/* This is wrapping only one particular control like a checkbox, radio or switch for example */}
         <FormControlLabel
           label={defaultPreference}
           value={defaultPreference}
@@ -48,7 +55,9 @@ const ModifiedRadios = (props: {
           control={<Radio />}
         />
       </RadioGroup>
+      <FormHelperText>WFH (Remote)</FormHelperText>
     </FormGroup>
+    // </FormControl>
   );
 };
 

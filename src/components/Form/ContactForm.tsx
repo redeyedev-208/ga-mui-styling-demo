@@ -194,75 +194,85 @@ const ContactForm = (props: Props) => {
           backgroundColor: 'grid.dark',
         }}
       >
+        {/* Note: FormControl should only wrap one input component, wrapping more than one can cause issues and cause all components to fail  */}
+        {/* The responsibility of FormControl is to control the state of whatever it is wrapping */}
         <form>
-          <FormControl>
-            <StyledModifiedFormGroup
-              row
-              // sx={{ backgroundColor: 'black' }} - Note uncommenting this proves that the styled component is locking down the styles
-              paddingtop={10}
+          <StyledModifiedFormGroup
+            row
+            // sx={{ backgroundColor: 'black' }} - Note uncommenting this proves that the styled component is locking down the styles
+            paddingtop={10}
+          >
+            <ModifiedTextField
+              value={formValues.name}
+              // The values being used in here weren't abstracted because they play an essential part of this contact form
+              // In case you want to know the type that is expected remove the "handleTextFieldChange" handler in the onChange prop
+              // Go up to the handleTextFieldChange handler and the event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+              // Hover over the onChange and intillisense will tell you it expects what is on the handler event pretty cool right
+              onChange={handleTextFieldChange}
+            />
+            <ModifiedAutoComplete
+              value={formValues.role || ''}
+              onInputChange={handleAutoCompleteChange}
+            />
+          </StyledModifiedFormGroup>
+          <StyledModifiedFormGroup row>
+            {/* The value is retrieved from children */}
+            <ModifiedSelect
+              value={formValues.skills || ''}
+              onChange={handleSelectChange}
             >
-              <ModifiedTextField
-                value={formValues.name}
-                // The values being used in here weren't abstracted because they play an essential part of this contact form
-                // In case you want to know the type that is expected remove the "handleTextFieldChange" handler in the onChange prop
-                // Go up to the handleTextFieldChange handler and the event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-                // Hover over the onChange and intillisense will tell you it expects what is on the handler event pretty cool right
-                onChange={handleTextFieldChange}
-              />
-              <ModifiedAutoComplete
-                value={formValues.role || ''}
-                onInputChange={handleAutoCompleteChange}
-              />
-            </StyledModifiedFormGroup>
-            <StyledModifiedFormGroup row>
-              {/* The value is retrieved from children */}
-              <ModifiedSelect
-                value={formValues.skills || ''}
-                onChange={handleSelectChange}
+              {skills.map((skillName) => {
+                return (
+                  <MenuItem
+                    value={skillName}
+                    key={skillName}
+                  >
+                    <Checkbox
+                      checked={formValues.skills?.includes(skillName)}
+                    />
+                    <ListItemText primary={skillName} />
+                  </MenuItem>
+                );
+              })}
+            </ModifiedSelect>
+            <ModifiedDesktopDatePicker
+              value={formValues.startDate}
+              onChange={handleDatepickerChange}
+            />
+          </StyledModifiedFormGroup>
+          <StyledModifiedFormGroup row>
+            <ModifiedRadios
+              preference={formValues.preference}
+              handleRadioChange={handleRadioChange}
+            />
+            {/* Note: We don't set the size in the theme for the buttons we set them here with sx respectively */}
+            {/* Difference betweena Box and Stack are mainly that a Box was favored in v4 and handles the majority of vanilla type implementations */}
+            {/* Example like using flex with css considerations like justify-content and align-items */}
+            {/* Stack has display flex by default, both render as a div no other
+            styling applied by default */}
+            {/* It does have a direction prop example: direction='row' etc */}
+            <Stack
+              direction='row'
+              justifyContent='space-around'
+              alignItems='flex-end'
+              sx={{ minWidth: minWidth }}
+            >
+              <Button
+                variant='contained'
+                sx={{ height: 56, width: 100 }}
+                onClick={handleButtonSubmit}
               >
-                {skills.map((skillName) => {
-                  return (
-                    <MenuItem
-                      value={skillName}
-                      key={skillName}
-                    >
-                      <Checkbox
-                        checked={formValues.skills?.includes(skillName)}
-                      />
-                      <ListItemText primary={skillName} />
-                    </MenuItem>
-                  );
-                })}
-              </ModifiedSelect>
-              <ModifiedDesktopDatePicker
-                value={formValues.startDate}
-                onChange={handleDatepickerChange}
-              />
-            </StyledModifiedFormGroup>
-            <StyledModifiedFormGroup row>
-              <ModifiedRadios
-                preference={formValues.preference}
-                handleRadioChange={handleRadioChange}
-              />
-              {/* Note: We don't set the size in the theme for the buttons we set them here with sx respectively */}
-              <Stack>
-                <Button
-                  variant='contained'
-                  sx={{ height: 56, width: 100 }}
-                  onClick={handleButtonSubmit}
-                >
-                  Submit
-                </Button>
-                <Button
-                  variant='modified'
-                  sx={{ height: 56, width: 100 }}
-                  onClick={handleClearBtnClick}
-                >
-                  Clear
-                </Button>
-              </Stack>
-            </StyledModifiedFormGroup>
-          </FormControl>
+                Submit
+              </Button>
+              <Button
+                variant='modified'
+                sx={{ height: 56, width: 100 }}
+                onClick={handleClearBtnClick}
+              >
+                Clear
+              </Button>
+            </Stack>
+          </StyledModifiedFormGroup>
         </form>
       </Paper>
       <Dialog
