@@ -53,7 +53,14 @@ const ContactCardGrid = (props: Props) => {
       <Grid
         container
         spacing={2}
-        sx={{ width: 700, backgroundColor: 'grid.main' }}
+        // We have padding top and left no padding left or padding right so we can just add it to the sx prop
+        sx={{
+          width: 700,
+          backgroundColor: 'grid.main',
+          marginLeft: 0,
+          paddingRight: 2,
+          paddingBottom: 2,
+        }}
       >
         {contactData.map((contact) => {
           maxSkills =
