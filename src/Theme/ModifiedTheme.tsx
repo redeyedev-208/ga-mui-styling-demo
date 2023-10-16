@@ -59,7 +59,7 @@ const ModifiedTheme = createTheme({
           props: { variant: 'modified' },
           style: {
             fontStyle: 'italic',
-            border: '4px solid lightblue',
+            border: '4px solid lightpurple',
             color: 'darkblue',
           },
         },
