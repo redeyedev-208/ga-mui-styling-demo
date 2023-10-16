@@ -36,6 +36,7 @@ export default function ModifiedSelect(props: {
       sx={{
         minWidth: minWidth,
         marginRight: 2, // This reaches into the default theme and is about 16 pixels
+        marginBottom: { xs: 2, md: 0 },
       }}
       multiple
       // MUI is actually adding inline styling to handle the menu prop so we are working around that (overriden because it is a class)

@@ -17,6 +17,10 @@ const ModifiedTextField = (props: TextFieldProps) => {
       sx={{
         minWidth: minWidth,
         marginRight: 2,
+        marginBottom: {
+          xs: 2,
+          md: 0,
+        },
         // zIndex: 'drawer', // Note: this looks at the default themes and will look at the drawer next
         // '& .MuiInputBase-root': { height: 80 }, Note: Just an example of how to adjust the height
         '& .MuiOutlinedInput-root.Mui-focused': {

@@ -196,7 +196,7 @@ const ContactForm = (props: Props) => {
       >
         {/* Note: FormControl should only wrap one input component, wrapping more than one can cause issues and cause all components to fail  */}
         {/* The responsibility of FormControl is to control the state of whatever it is wrapping */}
-        <form>
+        <form key={formValues.id}>
           <StyledModifiedFormGroup
             row
             // sx={{ backgroundColor: 'black' }} - Note uncommenting this proves that the styled component is locking down the styles
